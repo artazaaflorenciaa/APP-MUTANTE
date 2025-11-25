@@ -54,21 +54,33 @@ bash
 4. *Ejecutar la aplicacion desde el ide*
 5. *Para probar las peticiones de la API*
 6. *3. Probar con Swagger*
+
 🔹 Swagger en Render https://app-mutante.onrender.com
+
 🔹 Swagger local http://localhost:8080/swagger-ui/index.html
+
 En la parte de prueba de post/mutant colocar:
 
 9.*Instrucciones en swagger ejecutar en el Post/mutant*
+
 {
-"dna": ["ATGGGG", "CAGTGC", "TTATGT", "AGAAGG", "TCACTG", "TCACTG"]
+"dna": ["ATGGGG", 
+"CAGTGC", 
+"TTATGT", 
+"AGAAGG", 
+"TCACTG", 
+"TCACTG"]
 }
+
 Retorna 200 si es mutante, 403 si es humano
 
 *response headers*
+
 connection: keep-alive
 content-length: 0
 date: Tue,25 Nov 2025 14:59:10 GMT
 keep-alive: timeout=60
+
 *response en get status*
 
 ----------Response body------------
@@ -86,6 +98,7 @@ content-type: application/json
 date: Tue,25 Nov 2025 14:59:36 GMT
 keep-alive: timeout=60
 transfer-encoding: chunked
+
 */stats-get*
 Response
 {
@@ -95,6 +108,7 @@ Response
 }
 
 ## QUE HACE EL ALGORITMO
+
 *Algoritmo isMutant*
 
 La detección se realiza mediante: Validación de matriz NxN
@@ -107,7 +121,6 @@ src/main/java/.../Service/MutantDetector.java
 
 # Implementacion en H2
 Para abrir la consola H2 local:
-Debera tener la app corriendo
 Ir a: http://localhost:8080/h2-console
 
 Configuración:
