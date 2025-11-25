@@ -54,7 +54,7 @@ bash
 4. *Ejecutar la aplicacion desde el ide*
 5. *Para probar las peticiones de la API*
 6. *3. Probar con Swagger*
-🔹 Swagger en Render 
+🔹 Swagger en Render https://app-mutante.onrender.com
 🔹 Swagger local http://localhost:8080/swagger-ui/index.html
 En la parte de prueba de post/mutant colocar:
 
@@ -72,12 +72,14 @@ keep-alive: timeout=60
 *response en get status*
 
 ----------Response body------------
+
 Download
 {
 "ratio": 0,
 "count_mutant_dna": 1,
 "count_human_dna": 0
 }
+
 ----------Response headers----------
 connection: keep-alive
 content-type: application/json
@@ -91,6 +93,7 @@ Response
 "count_human_dna": 100,
 "ratio": 0.4
 }
+
 ## QUE HACE EL ALGORITMO
 *Algoritmo isMutant*
 
@@ -111,7 +114,6 @@ Configuración:
 *JDBC URL: jdbc:h2:mem:testdb*
 *User: sa*
 *Pass:*
-
 
 # Diagrama de secuencia en: 
 https://drive.google.com/file/d/1aZ9MXM75vvoZ_gLJoRmfmxUnPohfYfwi/view?usp=drive_link
