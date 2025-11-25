@@ -14,7 +14,7 @@ RUN chmod +x gradlew
 RUN ./gradlew bootJar --no-daemon
 
 # Usa la imagen de OpenJDK como base para ejecutar el JAR
-FROM openjdk:17-jdk-slim
+FROM eclipse-temurin:17-jdk-alpine
 
 # Copia el archivo JAR generado al contenedor y lo renombra
 COPY --from=build build/libs/appMutante-*.jar app.jar
