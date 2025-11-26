@@ -80,3 +80,4 @@ class MutantControllerTest {
                 .andExpect(jsonPath("$.ratio").value(0.4));
     }
 }
+
