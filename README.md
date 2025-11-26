@@ -1,136 +1,210 @@
-# Proyecto ADN Mutante
+# 🧬 Proyecto ADN Mutante
 
-Este proyecto es una API REST que permite verificar si un humano es mutante basándose en su secuencia de ADN. 
-La verificación se realiza mediante un algoritmo que busca secuencias de cuatro letras iguales de forma horizontal, vertical y diagonal. 
-El resultado de la verificación se guarda en una base de datos H2 y se pueden obtener estadísticas de las verificaciones realizadas.
+API REST desarrollada en **Java + Spring Boot** para determinar si una
+persona es mutante a partir de su secuencia de ADN.\
+El sistema detecta patrones de **cuatro letras consecutivas iguales**
+(A, T, C, G) en dirección **horizontal, vertical y diagonal**,
+registrando cada verificación en una base de datos H2 y permitiendo
+consultar estadísticas globales.
 
-## Estructura del Proyecto
+## 🏛️ Arquitectura del Proyecto
 
-El proyecto está estructurado en capas: controladores, servicios, repositorios y entidades.
+El proyecto adopta una **Arquitectura en Capas**, garantizando
+legibilidad, escalabilidad y mantenimiento:
 
-- *Controladores*: Manejan las solicitudes HTTP y las respuestas.
-- *Servicios*: Contienen la lógica del negocio y las operaciones relacionadas con el ADN.
-- *Repositorios*: Interactúan con la base de datos.
-- *Entidades*: Representan las estructuras de datos que se almacenan en la base de datos.
+-   **Controller:** Manejo de solicitudes HTTP.
+-   **Service:** Lógica de negocio y orquestación del flujo.
+-   **Repository:** Acceso a la base de datos mediante JPA.
+-   **Entity:** Representación del modelo persistido.
+-   **DTO:** Entrada y salida de datos.
+-   **Validator:** Validaciones custom de ADN.
+-   **Exception Handler:** Manejo unificado de errores.
 
-## Arquitectura del Proyecto
-*Controllers/*
-*DTO/*
-*Service/*
-*Repository/*
-*Entity/*
-*Validator/*
-*Exception/*
-*Config/*
+## 📂 Estructura del Proyecto
 
-## El Proyecto incluye
-Tests unitarios del detector
-Tests del servicio
-Tests del controlador
-Tests de integración
+``` text
+src/
+├── main/java/com/example/appMutante/
+│   ├── AppMutanteApplication.java
+│   ├── Config/
+│   │   └── SwaggerConfig.java
+│   ├── Controllers/
+│   │   └── MutantController.java
+│   ├── DTO/
+│   │   ├── DnaRequest.java
+│   │   ├── StatsResponse.java
+│   │   └── ErrorResponse.java
+│   ├── Entity/
+│   │   └── DnaRecord.java
+│   ├── Exception/
+│   │   ├── GlobalExceptionHandler.java
+│   │   └── DnaHashCalculationException.java
+│   ├── Repository/
+│   │   └── DnaRecordRepository.java
+│   ├── Service/
+│   │   ├── MutantDetector.java
+│   │   ├── MutantService.java
+│   │   └── StatsService.java
+│   └── Validator/
+│       ├── DnaValidator.java
+│       └── ValidDna.java
+│
+└── main/resources/
+    └── application.properties
 
-*Para ejecutar todos los tests:*
-bash
+test/java/com/example/appMutante/
+    ├── Controllers/MutantControllerTest.java
+    └── Service/
+        ├── MutantDetectorTest.java
+        ├── MutantServiceTest.java
+        └── StatsServiceTest.java
+```
+
+## 🛠️ Tecnologías Utilizadas
+
+-   **Java 17**
+-   **Spring Boot 3**
+-   **Spring Web / JPA**
+-   **H2 Database (In-Memory)**
+-   **Lombok**
+-   **Swagger - OpenAPI**
+-   **Gradle**
+-   **JUnit 5 + Mockito**
+
+## 🚀 Cómo Ejecutar el Proyecto
+
+### Ejecutar en Local
+
+1.  Clonar el repositorio.\
+2.  Abrir en IntelliJ
+3.  Ejecutar la clase:
+
+
+    AppMutanteApplication.java
+
+4.  El servicio quedará activo en:
+
+
+    http://localhost:8080
+
+### Ejecutar Tests
+
+``` bash
 ./gradlew test
+```
 
+## 📘 Swagger API Docs
 
-## Tecnologías Utilizadas
+-   **Local:** http://localhost:8080/swagger-ui/index.html\
+-   **Producción (Render):** https://app-mutante.onrender.com
 
-- Java 17
-- Spring Boot
-- Spring Web
-- Spring Data JPA
-- H2 Database
-- Swagger / OpenAPI
-- Gradle
-- Lombok
-- JUnit + Mockito
+## 🧪 Casos de Prueba (POST /mutant)
 
-## Instrucciones para Ejecutar la Aplicación
+### ✔️ Mutante (Horizontal + Diagonal)
 
-1. *Descargar o clonar el repositorio en zip*
-2. *Descomprimir el proyecto*
-3. *Usar un IDE (Entorno de desarrollo integrado) para abrir el proyecto*
-4. *Ejecutar la aplicacion desde el ide*
-5. *Para probar las peticiones de la API*
-6. *3. Probar con Swagger*
-
-🔹 Swagger en Render https://app-mutante.onrender.com
-
-🔹 Swagger local http://localhost:8080/swagger-ui/index.html
-
-En la parte de prueba de post/mutant colocar:
-
-9.*Instrucciones en swagger ejecutar en el Post/mutant*
-
+``` json
 {
-"dna": ["ATGGGG", 
-"CAGTGC", 
-"TTATGT", 
-"AGAAGG", 
-"TCACTG", 
-"TCACTG"]
+  "dna": [
+    "ATGCGA",
+    "CAGTGC",
+    "TTATGT",
+    "AGAAGG",
+    "CCCCTA",
+    "TCACTG"
+  ]
 }
+```
 
-Retorna 200 si es mutante, 403 si es humano
+### ✔️ Mutante (Vertical)
 
-*response headers*
-
-connection: keep-alive
-content-length: 0
-date: Tue,25 Nov 2025 14:59:10 GMT
-keep-alive: timeout=60
-
-*response en get status*
-
-----------Response body------------
-
-Download
+``` json
 {
-"ratio": 0,
-"count_mutant_dna": 1,
-"count_human_dna": 0
+  "dna": [
+    "AAAAGA",
+    "CAGTGC",
+    "TTATGT",
+    "AGAAGG",
+    "CACCTA",
+    "TCACTG"
+  ]
 }
+```
 
-----------Response headers----------
-connection: keep-alive
-content-type: application/json
-date: Tue,25 Nov 2025 14:59:36 GMT
-keep-alive: timeout=60
-transfer-encoding: chunked
+### ❌ Humano (solo una secuencia)
 
-*/stats-get*
-Response
+``` json
 {
-"count_mutant_dna": 40,
-"count_human_dna": 100,
-"ratio": 0.4
+  "dna": [
+    "ATGCGA",
+    "CAGTGC",
+    "TTATTT",
+    "AGACGG",
+    "GCGTCA",
+    "TCACTG"
+  ]
 }
+```
 
-## QUE HACE EL ALGORITMO
+### ❌ Humano (sin secuencias)
 
-*Algoritmo isMutant*
+``` json
+{
+  "dna": [
+    "ATGC",
+    "CAGT",
+    "TTAT",
+    "AGAC"
+  ]
+}
+```
 
-La detección se realiza mediante: Validación de matriz NxN
-Verificación de caracteres válidos: A, T, C, G
-Búsqueda en:Horizontal →, Vertical ↓ , Diagonal ↘ ,Diagonal ↙
-Terminación anticipada cuando se detectan 2 o más secuencias
+### ❌ Inválido (caracteres incorrectos)
 
-Implementado en:
-src/main/java/.../Service/MutantDetector.java
+``` json
+{
+  "dna": [
+    "ATXC",
+    "CAGT",
+    "TTAT",
+    "AGAC"
+  ]
+}
+```
 
-# Implementacion en H2
-Para abrir la consola H2 local:
-Ir a: http://localhost:8080/h2-console
+## 💾 Acceso a H2 Console
 
-Configuración:
-*JDBC URL: jdbc:h2:mem:testdb*
-*User: sa*
-*Pass:*
+1.  Ir a: http://localhost:8080/h2-console\
+2.  Configurar:
+    -   **URL:** `jdbc:h2:mem:testdb`\
+    -   **User:** `sa`\
+    -   **Password:** *(vacío)*\
+3.  Conectar.
 
-# Diagrama de secuencia en: 
-https://drive.google.com/file/d/1aZ9MXM75vvoZ_gLJoRmfmxUnPohfYfwi/view?usp=drive_link
-# Autor del Proyecto:
-*Nombre y Apellido: Artaza Atencio Florencia Antonella*
-*Legajo: 50779*
-*Curso: 3k9, Desarrollo de Software*
+## 📊 Recursos Adicionales
+
+-   **Diagrama de Secuencia:**\
+    https://drive.google.com/file/d/1aZ9MXM75vvoZ_gLJoRmfmxUnPohfYfwi/view
+-   **Casos de Prueba (POST /mutant)**\
+    https://drive.google.com/file/d/1rcdvdqrQYKDktsHMRrAiOaiUTjySNMY1/view?usp=sharing
+
+## 🎓 Conclusión
+
+Este proyecto aplica buenas prácticas de arquitectura, validación,
+testing y documentación.
+Se destacan:
+
+-   **Algoritmo optimizado** con detección temprana.
+-   **Validaciones robustas** mediante anotaciones personalizadas.
+-   **Persistencia eficiente**, evitando re-procesamientos mediante
+    hashing.
+-   **Cobertura de pruebas** para garantizar la confiabilidad del
+    sistema.
+-   **Arquitectura limpia y extensible**, ideal para escalar la solución
+    en el futuro.
+
+## 👤 Autor
+
+**Florencia Antonella Artaza Atencio**\
+**Legajo:** 50779\
+**Curso:** 3K9 -- Desarrollo de Software\
+**Universidad Tecnológica Nacional (UTN)**
